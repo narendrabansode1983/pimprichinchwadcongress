@@ -218,6 +218,44 @@
     .contact-item h4 { margin-bottom: 6px; }
     .contact-item p { font-size: 0.9rem; opacity: 0.75; }
 
+    /* JOIN US */
+    .join-section { background: #f5f0e8; }
+    .join-form {
+      max-width: 600px; margin: 0 auto;
+      background: white; border-radius: 14px;
+      padding: 36px 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+    .join-form .form-group { margin-bottom: 20px; }
+    .join-form label {
+      display: block; font-weight: 600; font-size: 0.9rem;
+      color: var(--congress-blue); margin-bottom: 6px;
+    }
+    .join-form input, .join-form textarea {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid #ddd; border-radius: 8px;
+      font-size: 0.95rem; font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s; outline: none;
+    }
+    .join-form input:focus, .join-form textarea:focus {
+      border-color: var(--congress-orange);
+    }
+    .join-form textarea { resize: vertical; min-height: 80px; }
+    .join-form .submit-btn {
+      width: 100%; padding: 14px;
+      background: var(--congress-orange); color: white;
+      border: none; border-radius: 8px;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: background 0.2s, transform 0.2s;
+      font-family: 'DM Sans', sans-serif; letter-spacing: 1px;
+    }
+    .join-form .submit-btn:hover {
+      background: #e6881e; transform: translateY(-2px);
+    }
+    .join-note {
+      text-align: center; color: #888; font-size: 0.82rem; margin-top: 14px;
+    }
+
     footer { background: #0d1f3c; color: rgba(255,255,255,0.6); text-align: center; padding: 20px; font-size: 0.85rem; }
     footer strong { color: white; }
   </style>
@@ -233,6 +271,7 @@
   <div class="nav-links">
     <a href="#home" class="active">Home</a>
     <a href="#about">About Us</a>
+    <a href="#join">Join Us</a>
     <a href="#contact">Contact Us</a>
   </div>
 </nav>
@@ -448,6 +487,102 @@
       <p>President@pimprichinchwadcongress.org</p>
     </div>
   </div>
+</section>
+
+<!-- JOIN US -->
+<section class="join-section" id="join">
+  <div class="section-title">
+    <div class="label"><span class="our">JOIN </span><span class="insp">US</span></div>
+    <p style="margin-top:10px;color:#555;">Be part of the movement — join INC Pimpri Chinchwad today!</p>
+  </div>
+  <div class="join-form">
+    <div id="form-success" style="display:none;text-align:center;padding:30px;">
+      <div style="font-size:3rem;">🙏</div>
+      <h3 style="color:#138808;margin:12px 0;">Application Submitted!</h3>
+      <p style="color:#555;">Thank you for joining INC Pimpri Chinchwad.<br>जय हिंद! जय महाराष्ट्र!</p>
+    </div>
+    <div id="form-error" style="display:none;background:#fff0f0;border:1px solid #ffaaaa;border-radius:8px;padding:14px;margin-bottom:16px;color:#c00;font-size:0.9rem;"></div>
+    <div id="form-wrap">
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" id="f-name" placeholder="Enter your full name (min 3 letters)" minlength="3" required>
+      </div>
+      <div class="form-group">
+        <label>Address *</label>
+        <textarea id="f-address" placeholder="Enter your full address (min 10 characters)" minlength="10" required></textarea>
+      </div>
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" id="f-email" placeholder="Enter your email address" required>
+      </div>
+      <div class="form-group">
+        <label>Contact Number *</label>
+        <input type="tel" id="f-contact" placeholder="Enter 10-digit Indian mobile number" maxlength="10" required>
+      </div>
+      <button class="submit-btn" id="submit-btn" onclick="submitForm()">🙏 SUBMIT APPLICATION</button>
+      <p class="join-note">Your information will be saved securely. जय हिंद!</p>
+    </div>
+  </div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwM_3bVVh2zZxlIAGK1MI55v7nHA5ql7LcT7yVeS-JczM_zDpUl1y5EuDjhbNDu2Tdn5A/exec";
+
+    function submitForm() {
+      const name    = document.getElementById('f-name').value.trim();
+      const address = document.getElementById('f-address').value.trim();
+      const email   = document.getElementById('f-email').value.trim();
+      const contact = document.getElementById('f-contact').value.trim();
+      const errBox  = document.getElementById('form-error');
+      errBox.style.display = 'none';
+
+      // Client-side validation
+      if (name.length < 3 || !/^[a-zA-Z\s\u0900-\u097F]+$/.test(name)) {
+        showError("❌ Please enter a valid full name (letters only, min 3 characters)"); return;
+      }
+      if (address.length < 10) {
+        showError("❌ Please enter a complete address (min 10 characters)"); return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError("❌ Please enter a valid email address"); return;
+      }
+      if (!/^[6-9]\d{9}$/.test(contact)) {
+        showError("❌ Please enter a valid 10-digit Indian mobile number (starts with 6/7/8/9)"); return;
+      }
+
+      const btn = document.getElementById('submit-btn');
+      btn.textContent = "Submitting... ⏳";
+      btn.disabled = true;
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify({name, address, email, contact}),
+        headers: {"Content-Type": "application/json"}
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.status === "success") {
+          document.getElementById('form-wrap').style.display = 'none';
+          document.getElementById('form-success').style.display = 'block';
+        } else {
+          showError("❌ " + data.message);
+          btn.textContent = "🙏 SUBMIT APPLICATION";
+          btn.disabled = false;
+        }
+      })
+      .catch(() => {
+        showError("❌ Network error. Please try again.");
+        btn.textContent = "🙏 SUBMIT APPLICATION";
+        btn.disabled = false;
+      });
+    }
+
+    function showError(msg) {
+      const e = document.getElementById('form-error');
+      e.textContent = msg;
+      e.style.display = 'block';
+      e.scrollIntoView({behavior:'smooth'});
+    }
+  </script>
 </section>
 
 <footer>
