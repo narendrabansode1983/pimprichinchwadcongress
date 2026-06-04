@@ -1,764 +1,506 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>INC Pimpri Chinchwad | Indian National Congress</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Sans+Devanagari:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --inc-blue: #003380;
-      --inc-green: #138808;
-      --inc-saffron: #FF671F;
-      --inc-navy: #001A4D;
-      --inc-gold: #C8A84B;
-      --inc-light: #F4F7FF;
-      --inc-white: #FFFFFF;
-      --shadow: 0 4px 24px rgba(0,51,128,0.12);
+      --saffron: #FF671F;
+      --green: #138808;
+      --navy: #003380;
+      --gold: #C8A84B;
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1a1a1a; }
+    .dark body { background: #0a0a0a; color: #f0f0f0; }
 
-    html { scroll-behavior: smooth; }
+    /* Tricolor gradient bg */
+    .tricolor-bg {
+      background: linear-gradient(160deg, #fff9f5 0%, #ffffff 45%, #f0fff4 100%);
+    }
+    .dark .tricolor-bg { background: linear-gradient(160deg, #1a0d00 0%, #0a0a0a 45%, #001a00 100%); }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--inc-white);
-      color: #1a1a2e;
-      overflow-x: hidden;
-    }
+    /* Tricolor bar */
+    .tricolor-bar { height: 5px; background: linear-gradient(to right, var(--saffron) 33.3%, #fff 33.3% 66.6%, var(--green) 66.6%); }
 
-    /* ── TOP BAR ── */
-    .top-bar {
-      background: var(--inc-navy);
-      color: #ccd6f6;
-      font-size: 13px;
-      padding: 7px 0;
-      border-bottom: 2px solid var(--inc-saffron);
-    }
-    .top-bar .inner {
-      max-width: 1200px; margin: auto;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0 24px;
-    }
-    .top-bar a { color: var(--inc-gold); text-decoration: none; margin-left: 16px; }
-    .top-bar a:hover { text-decoration: underline; }
+    /* Navbar */
+    nav { background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.06); position: sticky; top: 5px; z-index: 100; }
+    .dark nav { background: #111; }
+    .nav-inner { max-width: 1100px; margin: auto; padding: 0 20px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo img { width: 48px; height: 48px; object-fit: contain; }
+    .logo-text h1 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 17px; color: var(--navy); line-height: 1.2; }
+    .dark .logo-text h1 { color: #fff; }
+    .logo-text span { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 11px; color: #888; }
+    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-links a { padding: 7px 13px; font-size: 14px; font-weight: 500; color: #444; text-decoration: none; border-radius: 8px; transition: all 0.2s; }
+    .dark .nav-links a { color: #ccc; }
+    .nav-links a:hover, .nav-links a.active { background: #f0f4ff; color: var(--navy); }
+    .dark .nav-links a:hover { background: #222; color: #fff; }
+    .nav-join { background: var(--saffron) !important; color: #fff !important; border-radius: 50px !important; }
+    .nav-join:hover { background: #e05500 !important; }
+    .nav-icons { display: flex; align-items: center; gap: 12px; }
+    .icon-btn { background: none; border: none; cursor: pointer; font-size: 18px; color: #666; padding: 6px; border-radius: 8px; transition: all 0.2s; }
+    .dark .icon-btn { color: #aaa; }
+    .icon-btn:hover { background: #f0f0f0; color: #333; }
+    .dark .icon-btn:hover { background: #222; color: #fff; }
+    .hamburger { display: none; }
+    .mobile-menu { display: none; background: #fff; padding: 16px 20px; border-top: 1px solid #eee; flex-direction: column; gap: 8px; }
+    .dark .mobile-menu { background: #111; border-color: #222; }
+    .mobile-menu a { padding: 10px 14px; font-size: 15px; color: #444; text-decoration: none; border-radius: 8px; font-weight: 500; }
+    .dark .mobile-menu a { color: #ccc; }
+    .mobile-menu.open { display: flex; }
 
-    /* ── NAVBAR ── */
-    nav {
-      background: var(--inc-white);
-      box-shadow: 0 2px 16px rgba(0,51,128,0.10);
-      position: sticky; top: 0; z-index: 100;
-    }
-    .nav-inner {
-      max-width: 1200px; margin: auto;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 24px; height: 72px;
-    }
-    .logo {
-      display: flex; align-items: center; gap: 14px; text-decoration: none;
-    }
-    .logo-emblem {
-      width: 52px; height: 52px;
-      background: linear-gradient(135deg, var(--inc-saffron) 33%, var(--inc-white) 33% 66%, var(--inc-green) 66%);
-      border-radius: 50%;
-      border: 3px solid var(--inc-navy);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; position: relative; overflow: hidden;
-    }
-    .logo-emblem::after {
-      content: '✋';
-      font-size: 20px;
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    .logo-text h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px; font-weight: 900;
-      color: var(--inc-navy); line-height: 1.1;
-    }
-    .logo-text span {
-      font-size: 12px; color: #666;
-      font-family: 'Noto Sans Devanagari', sans-serif;
-    }
-    .nav-links {
-      display: flex; gap: 4px; list-style: none;
-    }
-    .nav-links a {
-      display: block; padding: 8px 14px;
-      font-size: 14px; font-weight: 600;
-      color: var(--inc-navy); text-decoration: none;
-      border-radius: 6px; transition: all 0.2s;
-    }
-    .nav-links a:hover {
-      background: var(--inc-light);
-      color: var(--inc-blue);
-    }
-    .nav-links a.active {
-      background: var(--inc-blue);
-      color: white;
-    }
-    .nav-join {
-      background: var(--inc-saffron);
-      color: white !important;
-      padding: 9px 20px !important;
-      border-radius: 50px !important;
-    }
-    .nav-join:hover { background: #e05500 !important; color: white !important; }
-    .hamburger { display: none; cursor: pointer; background: none; border: none; font-size: 24px; }
+    /* Hero */
+    .hero { padding: 80px 20px 60px; text-align: center; }
+    .hero-badge { display: inline-block; background: rgba(255,103,31,0.1); color: var(--saffron); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 18px; border-radius: 50px; margin-bottom: 20px; border: 1px solid rgba(255,103,31,0.2); }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 64px); font-weight: 900; line-height: 1.1; margin-bottom: 10px; color: #111; }
+    .dark .hero h1 { color: #f0f0f0; }
+    .hero h1 em { font-style: normal; color: var(--saffron); }
+    .hero-hindi { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 18px; color: #888; margin-bottom: 16px; }
+    .hero p { font-size: 17px; color: #666; max-width: 600px; margin: 0 auto 36px; line-height: 1.7; }
+    .dark .hero p { color: #aaa; }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 56px; }
+    .btn-primary { background: var(--saffron); color: #fff; padding: 14px 32px; border-radius: 50px; font-weight: 700; font-size: 15px; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary:hover { background: #e05500; transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--navy); padding: 14px 32px; border-radius: 50px; font-weight: 700; font-size: 15px; text-decoration: none; border: 2px solid var(--navy); transition: all 0.2s; }
+    .dark .btn-outline { color: #fff; border-color: #fff; }
+    .btn-outline:hover { background: var(--navy); color: #fff; }
+    .stats-row { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+    .stat-box { background: #fff; border: 1px solid #eee; border-radius: 20px; padding: 20px 32px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05); min-width: 120px; }
+    .dark .stat-box { background: #1a1a1a; border-color: #333; }
+    .stat-box .num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--saffron); }
+    .stat-box .lbl { font-size: 12px; color: #888; margin-top: 4px; }
 
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, var(--inc-navy) 0%, var(--inc-blue) 60%, #1a4fa0 100%);
-      color: white;
-      min-height: 92vh;
-      display: flex; align-items: center;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E") repeat;
-    }
-    .hero-tricolor {
-      position: absolute; top: 0; left: 0; right: 0; height: 6px;
-      background: linear-gradient(to right, var(--inc-saffron) 33%, white 33% 66%, var(--inc-green) 66%);
-    }
-    .hero-content {
-      max-width: 1200px; margin: auto; padding: 80px 24px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
-      position: relative; z-index: 1;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      padding: 8px 18px; border-radius: 50px;
-      font-size: 13px; font-weight: 500; margin-bottom: 20px;
-      backdrop-filter: blur(10px);
-    }
-    .hero-badge span { width: 8px; height: 8px; background: var(--inc-gold); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
-    .hero h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(32px, 5vw, 58px);
-      font-weight: 900; line-height: 1.1;
-      margin-bottom: 12px;
-    }
-    .hero h2 em {
-      font-style: normal;
-      color: var(--inc-gold);
-    }
-    .hero-hindi {
-      font-family: 'Noto Sans Devanagari', sans-serif;
-      font-size: 22px; color: rgba(255,255,255,0.75);
-      margin-bottom: 20px;
-    }
-    .hero p {
-      font-size: 16px; line-height: 1.7;
-      color: rgba(255,255,255,0.85); margin-bottom: 36px;
-    }
-    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--inc-saffron); color: white;
-      padding: 14px 32px; border-radius: 50px;
-      font-weight: 700; font-size: 15px; text-decoration: none;
-      transition: all 0.2s; border: 2px solid var(--inc-saffron);
-      display: inline-flex; align-items: center; gap: 8px;
-    }
-    .btn-primary:hover { background: transparent; color: var(--inc-saffron); }
-    .btn-outline {
-      background: transparent; color: white;
-      padding: 14px 32px; border-radius: 50px;
-      font-weight: 700; font-size: 15px; text-decoration: none;
-      border: 2px solid rgba(255,255,255,0.4);
-      transition: all 0.2s;
-      display: inline-flex; align-items: center; gap: 8px;
-    }
-    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
-    .hero-visual {
-      display: flex; flex-direction: column; gap: 16px;
-    }
-    .stat-cards {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
-    }
-    .stat-card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 16px; padding: 22px;
-      backdrop-filter: blur(12px);
-      transition: transform 0.2s;
-    }
-    .stat-card:hover { transform: translateY(-3px); }
-    .stat-card .num {
-      font-family: 'Playfair Display', serif;
-      font-size: 36px; font-weight: 900; color: var(--inc-gold);
-    }
-    .stat-card .label { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 4px; }
-    .hero-quote {
-      background: rgba(200,168,75,0.15);
-      border-left: 4px solid var(--inc-gold);
-      border-radius: 0 12px 12px 0;
-      padding: 18px 22px;
-      font-style: italic; font-size: 15px; color: rgba(255,255,255,0.9);
-    }
+    /* Section */
+    section { padding: 72px 20px; }
+    .section-inner { max-width: 1100px; margin: auto; }
+    .section-tag { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--saffron); margin-bottom: 10px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 42px); font-weight: 900; color: #111; margin-bottom: 10px; }
+    .dark .section-title { color: #f0f0f0; }
+    .section-sub { font-size: 16px; color: #777; max-width: 540px; line-height: 1.6; }
+    .dark .section-sub { color: #aaa; }
 
-    /* ── SECTIONS ── */
-    section { padding: 80px 24px; }
-    .section-inner { max-width: 1200px; margin: auto; }
-    .section-tag {
-      display: inline-block;
-      background: var(--inc-light); color: var(--inc-blue);
-      font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; padding: 6px 16px; border-radius: 50px;
-      margin-bottom: 14px;
-    }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(26px, 4vw, 40px); font-weight: 900;
-      color: var(--inc-navy); margin-bottom: 12px;
-    }
-    .section-sub { font-size: 16px; color: #555; max-width: 560px; line-height: 1.6; }
+    /* Ideology */
+    .ideology-list { display: flex; flex-direction: column; gap: 24px; max-width: 520px; margin: 40px auto 0; }
+    .ideology-card { background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.07); transition: transform 0.25s; border: 1px solid #f0f0f0; }
+    .dark .ideology-card { background: #1a1a1a; border-color: #333; }
+    .ideology-card:hover { transform: translateY(-4px); }
+    .ideology-img { height: 200px; display: flex; align-items: center; justify-content: center; }
+    .ideology-body { padding: 24px; text-align: center; }
+    .ideology-body h3 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; margin-bottom: 8px; color: #111; }
+    .dark .ideology-body h3 { color: #f0f0f0; }
+    .ideology-body p { font-size: 15px; color: #777; line-height: 1.5; }
+    .dark .ideology-body p { color: #aaa; }
 
-    /* ── ABOUT ── */
-    .about { background: var(--inc-light); }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
-      margin-top: 48px;
-    }
-    .about-img {
-      background: linear-gradient(135deg, var(--inc-navy), var(--inc-blue));
-      border-radius: 24px; height: 360px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 100px; position: relative; overflow: hidden;
-    }
-    .about-img::before {
-      content: '';
-      position: absolute; top: -30px; right: -30px;
-      width: 120px; height: 120px;
-      background: var(--inc-saffron); border-radius: 50%; opacity: 0.3;
-    }
-    .about-img::after {
-      content: '';
-      position: absolute; bottom: -20px; left: -20px;
-      width: 80px; height: 80px;
-      background: var(--inc-green); border-radius: 50%; opacity: 0.3;
-    }
-    .about-points { display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
-    .about-point {
-      display: flex; gap: 16px; align-items: flex-start;
-    }
-    .about-point .icon {
-      width: 44px; height: 44px; min-width: 44px;
-      background: var(--inc-blue); color: white;
-      border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-    }
-    .about-point h4 { font-weight: 700; margin-bottom: 4px; color: var(--inc-navy); }
-    .about-point p { font-size: 14px; color: #666; line-height: 1.5; }
+    /* Inspirations */
+    .inspirations-scroll { display: flex; gap: 16px; overflow-x: auto; padding: 8px 4px 16px; margin-top: 40px; scrollbar-width: thin; }
+    .inspiration-card { flex-shrink: 0; width: 160px; background: #fff; border-radius: 20px; padding: 16px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.07); border: 1px solid #eee; }
+    .dark .inspiration-card { background: #1a1a1a; border-color: #333; }
+    .inspiration-card img { width: 110px; height: 110px; border-radius: 14px; object-fit: cover; margin-bottom: 12px; }
+    .inspiration-card h4 { font-weight: 700; font-size: 13px; color: var(--saffron); line-height: 1.3; }
+    .inspiration-card p { font-size: 11px; color: #888; margin-top: 4px; }
 
-    /* ── LEADERS ── */
-    .leaders { background: white; }
-    .leaders-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 24px; margin-top: 48px;
-    }
-    .leader-card {
-      background: white; border-radius: 20px;
-      border: 1px solid #e8eef8;
-      padding: 28px 20px; text-align: center;
-      transition: all 0.25s; cursor: pointer;
-      box-shadow: var(--shadow);
-    }
-    .leader-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 40px rgba(0,51,128,0.15);
-      border-color: var(--inc-blue);
-    }
-    .leader-avatar {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--inc-saffron), var(--inc-blue));
-      margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
-      font-size: 32px; color: white; font-weight: 900;
-      border: 3px solid var(--inc-gold);
-    }
-    .leader-card h4 { font-weight: 700; font-size: 16px; color: var(--inc-navy); margin-bottom: 4px; }
-    .leader-card .role { font-size: 13px; color: var(--inc-blue); font-weight: 600; margin-bottom: 8px; }
-    .leader-card .ward { font-size: 12px; color: #888; }
-
-    /* ── NEWS ── */
-    .news { background: var(--inc-light); }
-    .news-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 24px; margin-top: 48px;
-    }
-    .news-card {
-      background: white; border-radius: 20px;
-      overflow: hidden; box-shadow: var(--shadow);
-      transition: all 0.25s;
-    }
-    .news-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,51,128,0.15); }
-    .news-img {
-      height: 180px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 56px;
-    }
+    /* News */
+    .news-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .news-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.07); border: 1px solid #eee; transition: transform 0.2s; }
+    .dark .news-card { background: #1a1a1a; border-color: #333; }
+    .news-card:hover { transform: translateY(-3px); }
+    .news-card img { width: 100%; height: 180px; object-fit: cover; }
     .news-body { padding: 20px; }
-    .news-cat {
-      display: inline-block; font-size: 11px; font-weight: 700;
-      letter-spacing: 1px; text-transform: uppercase;
-      padding: 4px 12px; border-radius: 50px;
-      margin-bottom: 10px;
-    }
-    .cat-blue { background: #dbeafe; color: var(--inc-blue); }
-    .cat-green { background: #dcfce7; color: var(--inc-green); }
-    .cat-orange { background: #ffedd5; color: var(--inc-saffron); }
-    .news-body h4 { font-weight: 700; font-size: 16px; line-height: 1.4; margin-bottom: 8px; color: var(--inc-navy); }
-    .news-body p { font-size: 13px; color: #777; line-height: 1.5; }
-    .news-meta { font-size: 12px; color: #aaa; margin-top: 12px; display: flex; gap: 12px; }
+    .news-cat { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--saffron); margin-bottom: 8px; }
+    .news-body h4 { font-weight: 700; font-size: 17px; color: #111; margin-bottom: 8px; line-height: 1.4; }
+    .dark .news-body h4 { color: #f0f0f0; }
+    .news-body p { font-size: 14px; color: #777; line-height: 1.5; }
+    .dark .news-body p { color: #aaa; }
+    .news-meta { font-size: 12px; color: #aaa; margin-top: 12px; }
+    .news-more { color: var(--saffron); font-weight: 600; font-size: 13px; text-decoration: none; display: inline-block; margin-top: 10px; }
 
-    /* ── AGENDA ── */
-    .agenda { background: var(--inc-navy); color: white; }
-    .agenda .section-title { color: white; }
-    .agenda .section-sub { color: rgba(255,255,255,0.7); }
-    .agenda-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px; margin-top: 48px;
-    }
-    .agenda-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 16px; padding: 28px 22px;
-      transition: all 0.25s;
-    }
-    .agenda-card:hover {
-      background: rgba(255,255,255,0.12);
-      border-color: var(--inc-gold);
-      transform: translateY(-3px);
-    }
-    .agenda-icon { font-size: 36px; margin-bottom: 14px; }
-    .agenda-card h4 { font-weight: 700; font-size: 17px; margin-bottom: 8px; }
-    .agenda-card p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.55; }
-
-    /* ── JOIN ── */
-    .join-section {
-      background: linear-gradient(135deg, var(--inc-saffron), #e05500);
-      color: white; text-align: center;
-      padding: 80px 24px;
-    }
-    .join-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px,4vw,48px); font-weight: 900; margin-bottom: 14px;
-    }
+    /* Join */
+    .join-section { background: linear-gradient(135deg, var(--saffron), #e05500); color: #fff; text-align: center; padding: 72px 20px; }
+    .join-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 48px); font-weight: 900; margin-bottom: 12px; }
     .join-section p { font-size: 17px; opacity: 0.9; margin-bottom: 36px; }
-    .join-form {
-      display: flex; gap: 12px; justify-content: center;
-      flex-wrap: wrap; max-width: 560px; margin: auto;
-    }
-    .join-form input {
-      flex: 1; min-width: 200px;
-      padding: 14px 20px; border-radius: 50px; border: none;
-      font-size: 15px; outline: none;
-    }
-    .join-form button {
-      background: var(--inc-navy); color: white;
-      padding: 14px 32px; border-radius: 50px;
-      border: none; font-size: 15px; font-weight: 700;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .join-form button:hover { background: #001a4d; transform: scale(1.03); }
+    .join-form { display: flex; gap: 10px; max-width: 480px; margin: auto; flex-wrap: wrap; }
+    .join-form input { flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 50px; border: none; font-size: 15px; font-family: inherit; outline: none; }
+    .join-form button { background: #111; color: #fff; padding: 14px 28px; border-radius: 50px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+    .join-form button:hover { background: #000; transform: scale(1.03); }
 
-    /* ── CONTACT ── */
-    .contact { background: var(--inc-light); }
-    .contact-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
-      margin-top: 48px;
-    }
-    .contact-info h4 { font-weight: 700; font-size: 18px; color: var(--inc-navy); margin-bottom: 20px; }
-    .contact-item { display: flex; gap: 14px; margin-bottom: 18px; }
-    .contact-icon {
-      width: 44px; height: 44px; min-width: 44px;
-      background: var(--inc-blue); color: white;
-      border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-    }
-    .contact-item p { font-size: 14px; color: #555; }
-    .contact-item strong { display: block; font-size: 15px; color: var(--inc-navy); }
-    .contact-form { display: flex; flex-direction: column; gap: 14px; }
-    .contact-form input, .contact-form textarea, .contact-form select {
-      padding: 13px 18px; border: 1.5px solid #dde5f5;
-      border-radius: 12px; font-size: 14px; font-family: inherit;
-      outline: none; transition: border 0.2s; background: white;
-    }
-    .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus {
-      border-color: var(--inc-blue);
-    }
+    /* Contact */
+    .contact-form { display: flex; flex-direction: column; gap: 14px; max-width: 520px; margin: 40px auto 0; }
+    .contact-form input, .contact-form textarea, .contact-form select { padding: 14px 18px; border: 1.5px solid #e0e0e0; border-radius: 14px; font-size: 15px; font-family: inherit; outline: none; transition: border 0.2s; background: #fff; }
+    .dark .contact-form input, .dark .contact-form textarea, .dark .contact-form select { background: #1a1a1a; border-color: #333; color: #f0f0f0; }
+    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--saffron); }
     .contact-form textarea { resize: vertical; min-height: 110px; }
-    .contact-form button {
-      background: var(--inc-blue); color: white;
-      padding: 14px; border-radius: 12px; border: none;
-      font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s;
-    }
-    .contact-form button:hover { background: var(--inc-navy); }
+    .contact-form button { background: var(--navy); color: #fff; padding: 15px; border-radius: 14px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+    .contact-form button:hover { background: #002060; }
+    .contact-info { max-width: 520px; margin: 28px auto 0; display: flex; flex-direction: column; gap: 14px; }
+    .contact-item { display: flex; align-items: center; gap: 14px; background: #fff; border-radius: 14px; padding: 16px 20px; border: 1px solid #eee; }
+    .dark .contact-item { background: #1a1a1a; border-color: #333; }
+    .contact-item .icon { width: 40px; height: 40px; min-width: 40px; background: var(--saffron); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .contact-item p { font-size: 14px; color: #666; }
+    .dark .contact-item p { color: #aaa; }
+    .contact-item strong { display: block; font-size: 15px; color: #111; margin-bottom: 2px; }
+    .dark .contact-item strong { color: #f0f0f0; }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--inc-navy);
-      color: rgba(255,255,255,0.7);
-      padding: 60px 24px 24px;
-    }
-    .footer-inner {
-      max-width: 1200px; margin: auto;
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
-      margin-bottom: 40px;
-    }
-    .footer-brand p { font-size: 14px; line-height: 1.6; margin: 14px 0; }
+    /* Footer */
+    footer { background: #0a1628; color: #aaa; padding: 56px 20px 24px; }
+    .footer-inner { max-width: 1100px; margin: auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand p { font-size: 14px; line-height: 1.7; margin: 14px 0; }
     .footer-social { display: flex; gap: 10px; margin-top: 16px; }
-    .social-btn {
-      width: 38px; height: 38px; border-radius: 10px;
-      background: rgba(255,255,255,0.08);
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none; font-size: 16px;
-      transition: background 0.2s;
-    }
-    .social-btn:hover { background: var(--inc-saffron); }
-    .footer-col h5 {
-      color: white; font-size: 14px; font-weight: 700;
-      margin-bottom: 16px; letter-spacing: 0.5px;
-    }
+    .social-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 15px; color: #aaa; transition: all 0.2s; }
+    .social-btn:hover { background: var(--saffron); color: #fff; }
+    .footer-col h5 { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 16px; letter-spacing: 1px; text-transform: uppercase; }
     .footer-col ul { list-style: none; }
     .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul a {
-      color: rgba(255,255,255,0.6); text-decoration: none;
-      font-size: 14px; transition: color 0.2s;
-    }
-    .footer-col ul a:hover { color: var(--inc-gold); }
-    .footer-bottom {
-      max-width: 1200px; margin: auto;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 24px;
-      display: flex; justify-content: space-between;
-      align-items: center; font-size: 13px; flex-wrap: wrap; gap: 10px;
-    }
-    .tricolor-bar {
-      height: 4px; border-radius: 2px;
-      background: linear-gradient(to right, var(--inc-saffron) 33%, white 33% 66%, var(--inc-green) 66%);
-      margin-top: 2px;
-    }
-
-    /* ── MOBILE ── */
-    @media (max-width: 900px) {
-      .hero-content, .about-grid, .contact-grid { grid-template-columns: 1fr; }
-      .hero-visual { display: none; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
-      .nav-links { display: none; }
-      .hamburger { display: block; }
-      .nav-links.open {
-        display: flex; flex-direction: column;
-        position: absolute; top: 72px; left: 0; right: 0;
-        background: white; padding: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-        z-index: 200;
-      }
-    }
-    @media (max-width: 600px) {
-      .footer-inner { grid-template-columns: 1fr; }
-      .stat-cards { grid-template-columns: 1fr 1fr; }
-    }
+    .footer-col ul a { color: #888; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--saffron); }
+    .footer-bottom { max-width: 1100px; margin: auto; border-top: 1px solid #1e2d45; padding-top: 24px; display: flex; justify-content: space-between; font-size: 13px; flex-wrap: wrap; gap: 10px; }
 
     /* Animations */
-    .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-up { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+      .inspirations-scroll { justify-content: flex-start; }
+    }
   </style>
 </head>
-<body>
+<body id="bodyEl">
 
-<!-- TOP BAR -->
-<div class="top-bar">
-  <div class="inner">
-    <span>🇮🇳 Indian National Congress — Pimpri Chinchwad City Unit</span>
-    <div>
-      <a href="tel:+912027650000">📞 +91 20 2765 0000</a>
-      <a href="mailto:info@incpimprichinchwad.org">✉️ info@incpimprichinchwad.org</a>
-    </div>
-  </div>
-</div>
+<!-- Tricolor top bar -->
+<div class="tricolor-bar" style="position:fixed;top:0;left:0;right:0;z-index:200;"></div>
 
 <!-- NAVBAR -->
-<nav>
+<nav style="margin-top:5px;">
   <div class="nav-inner">
     <a href="#" class="logo">
-      <div class="logo-emblem"></div>
+      <img src="https://upload.wikimedia.org/wikipedia/en/6/6c/Indian_National_Congress_hand_logo.svg" alt="INC Logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Indian_National_Congress_hand_logo.svg/200px-Indian_National_Congress_hand_logo.svg.png'"/>
       <div class="logo-text">
         <h1>INC Pimpri Chinchwad</h1>
         <span>भारतीय राष्ट्रीय काँग्रेस — पिंपरी चिंचवड</span>
       </div>
     </a>
-    <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <div class="nav-icons">
+      <button class="icon-btn" onclick="toggleDark()" id="darkBtn" title="Toggle dark mode"><i class="fa-regular fa-moon"></i></button>
+      <button class="icon-btn hamburger" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
+    </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#" class="active">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#leaders">Leaders</a></li>
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#ideology">Ideology</a></li>
+      <li><a href="#inspirations">Inspirations</a></li>
       <li><a href="#news">News</a></li>
-      <li><a href="#agenda">Agenda</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><a href="#join" class="nav-join">Join Now</a></li>
+      <li><a href="#join" class="nav-join">Join Us</a></li>
     </ul>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home" onclick="toggleMenu()">Home</a>
+    <a href="#ideology" onclick="toggleMenu()">Ideology</a>
+    <a href="#inspirations" onclick="toggleMenu()">Inspirations</a>
+    <a href="#news" onclick="toggleMenu()">News</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <a href="#join" onclick="toggleMenu()" style="color:var(--saffron);font-weight:700;">✋ Join Us</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero">
-  <div class="hero-tricolor"></div>
-  <div class="hero-content">
-    <div>
-      <div class="hero-badge"><span></span> Official City Unit — Pimpri Chinchwad</div>
-      <h2>Building a Better <em>Pimpri Chinchwad</em></h2>
-      <div class="hero-hindi">जनता की आवाज़, जनता की ताकत</div>
-      <p>The Indian National Congress Pimpri Chinchwad City Unit is committed to the development, welfare, and progress of every citizen of Pimpri Chinchwad Municipal Corporation.</p>
-      <div class="hero-btns">
-        <a href="#join" class="btn-primary">✋ Join Congress</a>
-        <a href="#news" class="btn-outline">📰 Latest News</a>
-      </div>
+<section class="tricolor-bg hero" id="home">
+  <div class="fade-up">
+    <img src="https://upload.wikimedia.org/wikipedia/en/6/6c/Indian_National_Congress_hand_logo.svg"
+         alt="INC" style="width:90px;height:90px;object-fit:contain;margin:0 auto 24px;display:block;"
+         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Indian_National_Congress_hand_logo.svg/200px-Indian_National_Congress_hand_logo.svg.png'"/>
+    <div class="hero-badge">Official City Unit — PCMC</div>
+    <h1>Reclaiming <em>Pimpri Chinchwad's</em><br>Glory & Progress</h1>
+    <div class="hero-hindi">जनता की आवाज़, जनता की ताकत</div>
+    <p>The Indian National Congress Pimpri Chinchwad City Unit is committed to the development, welfare, and progress of every citizen of PCMC.</p>
+    <div class="hero-btns">
+      <a href="#join" class="btn-primary">✋ Join the Movement</a>
+      <a href="#ideology" class="btn-outline">Our Vision</a>
     </div>
-    <div class="hero-visual">
-      <div class="stat-cards">
-        <div class="stat-card"><div class="num">68</div><div class="label">Prabhag in PCMC</div></div>
-        <div class="stat-card"><div class="num">25L+</div><div class="label">Citizens We Serve</div></div>
-        <div class="stat-card"><div class="num">1947</div><div class="label">Founded</div></div>
-        <div class="stat-card"><div class="num">100+</div><div class="label">Active Workers</div></div>
-      </div>
-      <div class="hero-quote">"Democracy is not just about elections — it's about everyday accountability to the people." — INC Pimpri Chinchwad</div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="num">68</div><div class="lbl">Prabhags in PCMC</div></div>
+      <div class="stat-box"><div class="num">25L+</div><div class="lbl">Citizens We Serve</div></div>
+      <div class="stat-box"><div class="num">1947</div><div class="lbl">Party Founded</div></div>
+      <div class="stat-box"><div class="num">100+</div><div class="lbl">Active Workers</div></div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="section-inner">
-    <span class="section-tag">About Us</span>
-    <h2 class="section-title">Congress in Pimpri Chinchwad</h2>
-    <p class="section-sub">Dedicated to the people of PCMC — from Pimpri to Chinchwad, Akurdi to Nigdi.</p>
-    <div class="about-grid fade-in">
-      <div class="about-img">🏛️</div>
-      <div>
-        <p style="color:#555;line-height:1.7;margin-bottom:20px;">The Pimpri Chinchwad City Congress Committee has been working tirelessly for the development of one of Maharashtra's fastest-growing industrial cities. Our party represents workers, farmers, women, youth, and every section of society.</p>
-        <div class="about-points">
-          <div class="about-point">
-            <div class="icon">🏭</div>
-            <div><h4>Industrial Workers' Champion</h4><p>Supporting the rights and welfare of lakhs of workers in the PCMC industrial belt.</p></div>
-          </div>
-          <div class="about-point">
-            <div class="icon">🎓</div>
-            <div><h4>Education & Youth</h4><p>Fighting for quality education, scholarships, and employment opportunities for local youth.</p></div>
-          </div>
-          <div class="about-point">
-            <div class="icon">🌿</div>
-            <div><h4>Environment & Infrastructure</h4><p>Clean roads, green spaces, and smart infrastructure for a liveable PCMC.</p></div>
-          </div>
-          <div class="about-point">
-            <div class="icon">👩</div>
-            <div><h4>Women Empowerment</h4><p>Mahila Congress actively leads programs for safety, health, and economic independence.</p></div>
-          </div>
+<div class="tricolor-bar"></div>
+
+<!-- IDEOLOGY -->
+<section class="tricolor-bg" id="ideology">
+  <div class="section-inner" style="text-align:center;">
+    <div class="section-tag">Our Core</div>
+    <h2 class="section-title">Our Ideology</h2>
+    <p class="section-sub" style="margin:auto;">The five pillars that guide our path towards an inclusive and progressive Pimpri Chinchwad.</p>
+    <div class="ideology-list fade-up">
+
+      <div class="ideology-card">
+        <div class="ideology-img" style="background:#EFF6FF;">
+          <img src="https://cdn-icons-png.flaticon.com/512/3132/3132736.png" alt="Democracy" style="height:140px;object-fit:contain;"/>
         </div>
+        <div class="ideology-body">
+          <h3>Democracy</h3>
+          <p>Upholding the democratic values and institutions of our great nation.</p>
+        </div>
+      </div>
+
+      <div class="ideology-card">
+        <div class="ideology-img" style="background:#FFFBEB;">
+          <img src="https://cdn-icons-png.flaticon.com/512/4616/4616448.png" alt="Secularism" style="height:140px;object-fit:contain;"/>
+        </div>
+        <div class="ideology-body">
+          <h3>Secularism</h3>
+          <p>Respecting all religions and fostering communal harmony across PCMC.</p>
+        </div>
+      </div>
+
+      <div class="ideology-card">
+        <div class="ideology-img" style="background:#F0FFF4;">
+          <img src="https://cdn-icons-png.flaticon.com/512/3281/3281306.png" alt="Inclusive Growth" style="height:140px;object-fit:contain;"/>
+        </div>
+        <div class="ideology-body">
+          <h3>Inclusive Growth</h3>
+          <p>Ensuring development reaches the last person — no citizen left behind.</p>
+        </div>
+      </div>
+
+      <div class="ideology-card">
+        <div class="ideology-img" style="background:#FFF5F5;">
+          <img src="https://cdn-icons-png.flaticon.com/512/4340/4340060.png" alt="Social Justice" style="height:140px;object-fit:contain;"/>
+        </div>
+        <div class="ideology-body">
+          <h3>Social Justice</h3>
+          <p>Fighting for the rights of the marginalized and working class of PCMC.</p>
+        </div>
+      </div>
+
+      <div class="ideology-card">
+        <div class="ideology-img" style="background:#FFF9F0;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/320px-Flag_of_India.svg.png" alt="Nationalism" style="height:110px;object-fit:contain;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.1);"/>
+        </div>
+        <div class="ideology-body">
+          <h3>Nationalism</h3>
+          <p>Unwavering commitment to the unity, integrity, and progress of India.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="tricolor-bar"></div>
+
+<!-- INSPIRATIONS -->
+<section class="tricolor-bg" id="inspirations">
+  <div class="section-inner" style="text-align:center;">
+    <div class="section-tag">Our</div>
+    <h2 class="section-title">Inspirations</h2>
+    <p class="section-sub" style="margin:auto;">The great leaders who inspire our work for the people of Pimpri Chinchwad.</p>
+    <div class="inspirations-scroll fade-up" style="justify-content:center;flex-wrap:wrap;overflow:visible;">
+      <div class="inspiration-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Mahatma-Gandhi%2C_studio%2C_1931.jpg/220px-Mahatma-Gandhi%2C_studio%2C_1931.jpg" alt="Gandhi"/>
+        <h4>Mahatma Gandhi</h4>
+        <p>Father of the Nation</p>
+      </div>
+      <div class="inspiration-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Jawaharlal_Nehru_1948.jpg/220px-Jawaharlal_Nehru_1948.jpg" alt="Nehru"/>
+        <h4>Pt. Jawaharlal Nehru</h4>
+        <p>First Prime Minister</p>
+      </div>
+      <div class="inspiration-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Bhimrao_Ramji_Ambedkar.jpg/220px-Bhimrao_Ramji_Ambedkar.jpg" alt="Ambedkar"/>
+        <h4>Dr. B.R. Ambedkar</h4>
+        <p>Architect of Constitution</p>
+      </div>
+      <div class="inspiration-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Shivaji_BritishMuseum.jpg/220px-Shivaji_BritishMuseum.jpg" alt="Shivaji"/>
+        <h4>Chhatrapati Shivaji Maharaj</h4>
+        <p>Architect of Swarajya</p>
+      </div>
+      <div class="inspiration-card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Indira_Gandhi%2C_1977.jpg/220px-Indira_Gandhi%2C_1977.jpg" alt="Indira Gandhi"/>
+        <h4>Indira Gandhi</h4>
+        <p>Iron Lady of India</p>
       </div>
     </div>
   </div>
 </section>
+
+<div class="tricolor-bar"></div>
 
 <!-- NEWS -->
-<section class="news" id="news">
-  <div class="section-inner">
-    <span class="section-tag">News & Updates</span>
-    <h2 class="section-title">Latest from PCMC Congress</h2>
-    <p class="section-sub">Stay updated with party activities, events, and campaigns in Pimpri Chinchwad.</p>
-    <div class="news-grid fade-in">
+<section class="tricolor-bg" id="news">
+  <div class="section-inner" style="text-align:center;">
+    <div class="section-tag">Latest</div>
+    <h2 class="section-title">News & Events</h2>
+    <p class="section-sub" style="margin:auto;">Stay updated with party activities and campaigns across Pimpri Chinchwad.</p>
+    <div class="news-grid fade-up">
+
       <div class="news-card">
-        <div class="news-img" style="background:#fffbeb;">📣</div>
+        <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&q=80" alt="Rally"/>
         <div class="news-body">
-          <span class="news-cat cat-orange">Campaign</span>
+          <div class="news-cat">Campaign</div>
           <h4>Mega Jan Sampark Rally at Thergaon Grounds</h4>
-          <p>Thousands of Congress workers and citizens gathered for a public outreach rally demanding better roads and water supply in Thergaon area.</p>
-          <div class="news-meta"><span>📅 28 May 2026</span><span>📍 Thergaon</span></div>
+          <p>Thousands gathered to demand better roads and water supply across PCMC wards.</p>
+          <div class="news-meta">📅 28 May 2026 &nbsp;·&nbsp; 📍 Thergaon</div>
+          <a href="#" class="news-more">Read More →</a>
         </div>
       </div>
+
       <div class="news-card">
-        <div class="news-img" style="background:#eff6ff;">🏥</div>
+        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80" alt="Health"/>
         <div class="news-body">
-          <span class="news-cat cat-blue">Health</span>
+          <div class="news-cat">Health</div>
           <h4>Free Health Camp Organized in Nigdi Pradhikaran</h4>
-          <p>INC Pimpri Chinchwad organized a free medical checkup camp benefitting over 800 residents with diabetes and BP screening.</p>
-          <div class="news-meta"><span>📅 22 May 2026</span><span>📍 Nigdi</span></div>
+          <p>Over 800 residents benefited from free diabetes and BP screening.</p>
+          <div class="news-meta">📅 22 May 2026 &nbsp;·&nbsp; 📍 Nigdi</div>
+          <a href="#" class="news-more">Read More →</a>
         </div>
       </div>
+
       <div class="news-card">
-        <div class="news-img" style="background:#f0fdf4;">📚</div>
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" alt="Education"/>
         <div class="news-body">
-          <span class="news-cat cat-green">Education</span>
+          <div class="news-cat">Education</div>
           <h4>Scholarship Drive for PCMC Students Launched</h4>
-          <p>Congress announces scholarship assistance programme for meritorious students from economically weaker sections across PCMC schools and colleges.</p>
-          <div class="news-meta"><span>📅 15 May 2026</span><span>📍 PCMC HQ</span></div>
+          <p>Congress announces scholarship assistance for students from weaker sections.</p>
+          <div class="news-meta">📅 15 May 2026 &nbsp;·&nbsp; 📍 PCMC HQ</div>
+          <a href="#" class="news-more">Read More →</a>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- AGENDA -->
-<section class="agenda" id="agenda">
-  <div class="section-inner">
-    <span class="section-tag" style="background:rgba(200,168,75,0.2);color:var(--inc-gold);">Our Agenda</span>
-    <h2 class="section-title">Our Priorities for PCMC</h2>
-    <p class="section-sub">Congress commits to these key development goals for Pimpri Chinchwad.</p>
-    <div class="agenda-grid fade-in">
-      <div class="agenda-card"><div class="agenda-icon">🚰</div><h4>Clean Water for All</h4><p>24x7 clean drinking water supply to every home in PCMC at affordable rates.</p></div>
-      <div class="agenda-card"><div class="agenda-icon">🛣️</div><h4>Better Roads</h4><p>Pothole-free, well-lit roads across all 68 prabhags with proper drainage systems.</p></div>
-      <div class="agenda-card"><div class="agenda-icon">💼</div><h4>Local Employment</h4><p>Policies to ensure PCMC industries hire local youth and pay fair wages.</p></div>
-      <div class="agenda-card"><div class="agenda-icon">🏗️</div><h4>Affordable Housing</h4><p>Low-cost housing schemes for workers and middle-class families in PCMC.</p></div>
-      <div class="agenda-card"><div class="agenda-icon">🌳</div><h4>Green PCMC</h4><p>Urban forests, parks, and anti-pollution drives to improve air quality.</p></div>
-      <div class="agenda-card"><div class="agenda-icon">📶</div><h4>Digital City</h4><p>Free WiFi zones, e-governance, and smart city solutions for every ward.</p></div>
-    </div>
-  </div>
-</section>
+<div class="tricolor-bar"></div>
 
 <!-- JOIN -->
 <section class="join-section" id="join">
   <h2>Join the INC Movement</h2>
-  <p>Be part of the change. Join thousands of workers building a better Pimpri Chinchwad.</p>
+  <p>Be part of the change. Join thousands building a better Pimpri Chinchwad.</p>
   <div class="join-form">
-    <input type="text" placeholder="Your Full Name" />
-    <input type="tel" placeholder="Mobile Number" />
-    <button onclick="alert('Thank you! Our team will contact you shortly.')">Join Now ✋</button>
+    <input type="text" placeholder="Your Full Name"/>
+    <input type="tel" placeholder="Mobile Number"/>
+    <button onclick="alert('Thank you! Our team will contact you. Congress Zindabad! 🇮🇳')">Join Now ✋</button>
   </div>
 </section>
 
+<div class="tricolor-bar"></div>
+
 <!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="section-inner">
-    <span class="section-tag">Contact Us</span>
-    <h2 class="section-title">Get in Touch</h2>
-    <p class="section-sub">Reach out to INC Pimpri Chinchwad — your voice matters.</p>
-    <div class="contact-grid fade-in">
-      <div class="contact-info">
-        <h4>Party Office Details</h4>
-        <div class="contact-item">
-          <div class="contact-icon">📍</div>
-          <div><strong>Address</strong><p>Congress Bhavan, Near PCMC Main Office,<br>Pimpri, Pune – 411018, Maharashtra</p></div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">📞</div>
-          <div><strong>Phone</strong><p>+91 98601 77177</p></div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">✉️</div>
-          <div><strong>Email</strong><p>president@pimprichinchwadcongress.org</p></div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">🕐</div>
-          <div><strong>Office Hours</strong><p>Monday – Saturday: 10:00 AM – 6:00 PM</p></div>
-        </div>
+<section class="tricolor-bg" id="contact">
+  <div class="section-inner" style="text-align:center;">
+    <div class="section-tag">Get in Touch</div>
+    <h2 class="section-title">Contact Us</h2>
+    <p class="section-sub" style="margin:auto;">Reach out to INC Pimpri Chinchwad — your voice matters to us.</p>
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div><strong>Address</strong><p>Congress Bhavan, Near PCMC Main Office, Pimpri, Pune – 411018</p></div>
       </div>
-      <div>
-        <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent! We will get back to you soon.')">
-          <input type="text" placeholder="Your Full Name" required />
-          <input type="tel" placeholder="Mobile Number" required />
-          <input type="email" placeholder="Email Address" />
-          <select>
-            <option value="">Select Subject</option>
-            <option>General Inquiry</option>
-            <option>Complaint / Grievance</option>
-            <option>Join Congress</option>
-            <option>Media / Press</option>
-            <option>Volunteer</option>
-          </select>
-          <textarea placeholder="Your message..."></textarea>
-          <button type="submit">Send Message →</button>
-        </form>
+      <div class="contact-item">
+        <div class="icon"><i class="fa-solid fa-phone"></i></div>
+        <div><strong>Phone</strong><p>+91 98601 77177</p></div>
       </div>
+      <div class="contact-item">
+        <div class="icon"><i class="fa-solid fa-envelope"></i></div>
+        <div><strong>Email</strong><p>President@pimprichinchwadcongress.org</p></div>
+      </div>
+
     </div>
+    <form class="contact-form fade-up" onsubmit="event.preventDefault();alert('Message sent! We will get back to you soon. 🇮🇳')">
+      <input type="text" placeholder="Your Full Name" required/>
+      <input type="tel" placeholder="Mobile Number" required/>
+      <input type="email" placeholder="Email Address (optional)"/>
+      <input type="text" placeholder="Your Ward / Area in PCMC"/>
+      <textarea placeholder="Your message or grievance..."></textarea>
+      <button type="submit">Send Message →</button>
+    </form>
   </div>
 </section>
 
 <!-- FOOTER -->
+<div class="tricolor-bar"></div>
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-        <div class="logo-emblem" style="width:44px;height:44px;font-size:18px;"></div>
-        <div>
-          <div style="color:white;font-weight:700;font-size:16px;">INC Pimpri Chinchwad</div>
-          <div class="tricolor-bar" style="width:160px;margin-top:4px;"></div>
-        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/en/6/6c/Indian_National_Congress_hand_logo.svg" alt="INC" style="width:40px;height:40px;object-fit:contain;filter:brightness(0) invert(1);"/>
+        <div style="color:#fff;font-weight:700;font-size:15px;">INC Pimpri Chinchwad</div>
       </div>
-      <p>Indian National Congress — Pimpri Chinchwad City Committee. Working for the people of PCMC since independence.</p>
+      <p>Indian National Congress — Pimpri Chinchwad City Committee. Working for the people of PCMC.</p>
       <div class="footer-social">
-        <a href="#" class="social-btn">🐦</a>
-        <a href="#" class="social-btn">📘</a>
-        <a href="#" class="social-btn">📸</a>
-        <a href="#" class="social-btn">▶️</a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
       </div>
     </div>
     <div class="footer-col">
       <h5>Quick Links</h5>
       <ul>
-        <li><a href="#about">About Us</a></li>
-        <li><a href="#leaders">Our Leaders</a></li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#agenda">Our Agenda</a></li>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#ideology">Our Ideology</a></li>
+        <li><a href="#inspirations">Inspirations</a></li>
+        <li><a href="#news">News & Events</a></li>
         <li><a href="#join">Join Congress</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Party Wings</h5>
-      <ul>
-        <li><a href="#">Youth Congress</a></li>
-        <li><a href="#">Mahila Congress</a></li>
-        <li><a href="#">NSUI</a></li>
-        <li><a href="#">Seva Dal</a></li>
-        <li><a href="#">Minority Cell</a></li>
+        <li><a href="#contact">Contact Us</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h5>Resources</h5>
       <ul>
-        <li><a href="https://www.inc.in" target="_blank">INC National</a></li>
-        <li><a href="https://www.incmaharashtra.org" target="_blank">INC Maharashtra</a></li>
+        <li><a href="https://incmaharashtra.org" target="_blank">INC Maharashtra</a></li>
+        <li><a href="https://inc.in" target="_blank">AICC National</a></li>
         <li><a href="#">PCMC Website</a></li>
         <li><a href="#">Grievance Portal</a></li>
-        <li><a href="#">Media Gallery</a></li>
+        <li><a href="#">Youth Congress</a></li>
+        <li><a href="#">Mahila Congress</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 INC Pimpri Chinchwad. All Rights Reserved.</span>
-    <span style="color:var(--inc-gold);">🇮🇳 Congress Zindabad • पिंपरी चिंचवड काँग्रेस</span>
+    <span style="color:var(--saffron);">🇮🇳 Congress Zindabad · पिंपरी चिंचवड काँग्रेस</span>
   </div>
 </footer>
 
 <script>
-  // Mobile menu
-  function toggleMenu() {
-    document.getElementById('navLinks').classList.toggle('open');
+  function toggleDark() {
+    document.documentElement.classList.toggle('dark');
+    const btn = document.getElementById('darkBtn');
+    btn.innerHTML = document.documentElement.classList.contains('dark')
+      ? '<i class="fa-regular fa-sun"></i>'
+      : '<i class="fa-regular fa-moon"></i>';
   }
-
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
   // Scroll animations
-  const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-  // Active nav link on scroll
-  const sections = document.querySelectorAll('section[id], nav');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  // Active nav
   window.addEventListener('scroll', () => {
-    let current = '';
     document.querySelectorAll('section[id]').forEach(s => {
-      if (window.scrollY >= s.offsetTop - 100) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.classList.remove('active');
-      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+      if (window.scrollY >= s.offsetTop - 80) {
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.nav-links a[href="#${s.id}"]`);
+        if (active) active.classList.add('active');
+      }
     });
   });
 </script>
