@@ -1,508 +1,486 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>INC Pimpri Chinchwad | Indian National Congress</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Sans+Devanagari:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --saffron: #FF671F;
-      --green: #138808;
-      --navy: #003380;
-      --gold: #C8A84B;
+      --congress-blue: #1a3a6b;
+      --congress-green: #138808;
+      --congress-orange: #FF9933;
+      --gold: #c8a951;
+      --bg: #f5f0e8;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'DM Sans', sans-serif; background: #fff; color: #1a1a1a; }
-    .dark body { background: #0a0a0a; color: #f0f0f0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: #1a1a1a; }
 
-    /* Tricolor gradient bg */
-    .tricolor-bg {
-      background: linear-gradient(160deg, #fff9f5 0%, #ffffff 45%, #f0fff4 100%);
+    /* NAV */
+    nav {
+      background: #fff;
+      display: flex; align-items: center;
+      padding: 12px 40px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      position: sticky; top: 0; z-index: 100;
+      gap: 20px;
     }
-    .dark .tricolor-bg { background: linear-gradient(160deg, #1a0d00 0%, #0a0a0a 45%, #001a00 100%); }
+    .nav-logo { display: flex; align-items: center; gap: 12px; margin-right: auto; }
+    .nav-logo img { height: 56px; }
+    .nav-logo .site-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--congress-blue); line-height: 1.2; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      text-decoration: none; color: #333; font-weight: 500; font-size: 0.95rem;
+      padding-bottom: 4px; border-bottom: 2px solid transparent; transition: all 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--congress-blue); border-bottom-color: var(--congress-orange); }
 
-    /* Tricolor bar */
-    .tricolor-bar { height: 5px; background: linear-gradient(to right, var(--saffron) 33.3%, #fff 33.3% 66.6%, var(--green) 66.6%); }
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #1a3a6b 0%, #0d2247 60%, #138808 100%);
+      color: white; text-align: center; padding: 80px 20px 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-flag-bar { display: flex; height: 6px; width: 200px; margin: 0 auto 24px; border-radius: 3px; overflow: hidden; }
+    .hero-flag-bar span { flex: 1; }
+    .hero-flag-bar span:nth-child(1) { background: var(--congress-orange); }
+    .hero-flag-bar span:nth-child(2) { background: white; }
+    .hero-flag-bar span:nth-child(3) { background: var(--congress-green); }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 8px; }
+    .hero .devanagari { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 1.3rem; opacity: 0.85; margin-bottom: 16px; }
+    .hero p { font-size: 1.1rem; opacity: 0.8; max-width: 500px; margin: 0 auto 28px; }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--congress-orange); color: white; border: none;
+      padding: 12px 28px; border-radius: 6px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; transition: transform 0.2s; text-decoration: none;
+    }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: white; border: 2px solid rgba(255,255,255,0.6);
+      padding: 12px 28px; border-radius: 6px; font-size: 1rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: all 0.2s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); }
 
-    /* Navbar */
-    nav { background: #fff; box-shadow: 0 2px 20px rgba(0,0,0,0.06); position: sticky; top: 5px; z-index: 100; }
-    .dark nav { background: #111; }
-    .nav-inner { max-width: 1100px; margin: auto; padding: 0 20px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .logo img { width: 48px; height: 48px; object-fit: contain; }
-    .logo-text h1 { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 17px; color: var(--navy); line-height: 1.2; }
-    .dark .logo-text h1 { color: #fff; }
-    .logo-text span { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 11px; color: #888; }
-    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
-    .nav-links a { padding: 7px 13px; font-size: 14px; font-weight: 500; color: #444; text-decoration: none; border-radius: 8px; transition: all 0.2s; }
-    .dark .nav-links a { color: #ccc; }
-    .nav-links a:hover, .nav-links a.active { background: #f0f4ff; color: var(--navy); }
-    .dark .nav-links a:hover { background: #222; color: #fff; }
-    .nav-join { background: var(--saffron) !important; color: #fff !important; border-radius: 50px !important; }
-    .nav-join:hover { background: #e05500 !important; }
-    .nav-icons { display: flex; align-items: center; gap: 12px; }
-    .icon-btn { background: none; border: none; cursor: pointer; font-size: 18px; color: #666; padding: 6px; border-radius: 8px; transition: all 0.2s; }
-    .dark .icon-btn { color: #aaa; }
-    .icon-btn:hover { background: #f0f0f0; color: #333; }
-    .dark .icon-btn:hover { background: #222; color: #fff; }
-    .hamburger { display: none; }
-    .mobile-menu { display: none; background: #fff; padding: 16px 20px; border-top: 1px solid #eee; flex-direction: column; gap: 8px; }
-    .dark .mobile-menu { background: #111; border-color: #222; }
-    .mobile-menu a { padding: 10px 14px; font-size: 15px; color: #444; text-decoration: none; border-radius: 8px; font-weight: 500; }
-    .dark .mobile-menu a { color: #ccc; }
-    .mobile-menu.open { display: flex; }
+    .tricolor-bar { height: 5px; display: flex; }
+    .tricolor-bar span { flex: 1; }
+    .tricolor-bar span:nth-child(1) { background: var(--congress-orange); }
+    .tricolor-bar span:nth-child(2) { background: white; }
+    .tricolor-bar span:nth-child(3) { background: var(--congress-green); }
 
-    /* Hero */
-    .hero { padding: 80px 20px 60px; text-align: center; }
-    .hero-badge { display: inline-block; background: rgba(255,103,31,0.1); color: var(--saffron); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 18px; border-radius: 50px; margin-bottom: 20px; border: 1px solid rgba(255,103,31,0.2); }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 64px); font-weight: 900; line-height: 1.1; margin-bottom: 10px; color: #111; }
-    .dark .hero h1 { color: #f0f0f0; }
-    .hero h1 em { font-style: normal; color: var(--saffron); }
-    .hero-hindi { font-family: 'Noto Sans Devanagari', sans-serif; font-size: 18px; color: #888; margin-bottom: 16px; }
-    .hero p { font-size: 17px; color: #666; max-width: 600px; margin: 0 auto 36px; line-height: 1.7; }
-    .dark .hero p { color: #aaa; }
-    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 56px; }
-    .btn-primary { background: var(--saffron); color: #fff; padding: 14px 32px; border-radius: 50px; font-weight: 700; font-size: 15px; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
-    .btn-primary:hover { background: #e05500; transform: translateY(-2px); }
-    .btn-outline { background: transparent; color: var(--navy); padding: 14px 32px; border-radius: 50px; font-weight: 700; font-size: 15px; text-decoration: none; border: 2px solid var(--navy); transition: all 0.2s; }
-    .dark .btn-outline { color: #fff; border-color: #fff; }
-    .btn-outline:hover { background: var(--navy); color: #fff; }
-    .stats-row { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-    .stat-box { background: #fff; border: 1px solid #eee; border-radius: 20px; padding: 20px 32px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05); min-width: 120px; }
-    .dark .stat-box { background: #1a1a1a; border-color: #333; }
-    .stat-box .num { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--saffron); }
-    .stat-box .lbl { font-size: 12px; color: #888; margin-top: 4px; }
+    /* SECTION */
+    section { padding: 60px 20px; }
+    .section-title { text-align: center; margin-bottom: 40px; }
+    .section-title .label {
+      font-size: 2rem; font-weight: 700; letter-spacing: 2px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .section-title .label span.our { color: #222; }
+    .section-title .label span.insp { color: #d94f00; }
 
-    /* Section */
-    section { padding: 72px 20px; }
-    .section-inner { max-width: 1100px; margin: auto; }
-    .section-tag { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--saffron); margin-bottom: 10px; }
-    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 42px); font-weight: 900; color: #111; margin-bottom: 10px; }
-    .dark .section-title { color: #f0f0f0; }
-    .section-sub { font-size: 16px; color: #777; max-width: 540px; line-height: 1.6; }
-    .dark .section-sub { color: #aaa; }
+    /* ===== OUR INSPIRATION CAROUSEL ===== */
+    .inspiration-section { background: #f8f4ee; overflow: hidden; padding: 50px 0; }
+    .inspiration-section .section-title { padding: 0 20px; }
 
-    /* Ideology */
-    .ideology-list { display: flex; flex-direction: column; gap: 24px; max-width: 520px; margin: 40px auto 0; }
-    .ideology-card { background: #fff; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.07); transition: transform 0.25s; border: 1px solid #f0f0f0; }
-    .dark .ideology-card { background: #1a1a1a; border-color: #333; }
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+      padding: 10px 0 20px;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 16px;
+      animation: scrollCarousel 28s linear infinite;
+      width: max-content;
+    }
+    .carousel-track:hover { animation-play-state: paused; }
+
+    @keyframes scrollCarousel {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .inspiration-card {
+      flex-shrink: 0;
+      width: 200px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .inspiration-card:hover { transform: translateY(-4px); }
+
+    .inspiration-card .card-img-wrap {
+      width: 200px; height: 220px;
+      overflow: hidden; position: relative;
+    }
+    .inspiration-card .card-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      display: block;
+    }
+
+    /* Hover name overlay */
+    .inspiration-card .card-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.65);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.25s;
+      padding: 10px;
+    }
+    .inspiration-card:hover .card-overlay { opacity: 1; }
+    .inspiration-card .card-overlay span {
+      color: white; font-size: 0.9rem; font-weight: 700;
+      text-align: center; line-height: 1.4;
+    }
+
+    .inspiration-card .card-name {
+      padding: 10px 8px 12px;
+      font-weight: 600; font-size: 0.82rem;
+      color: var(--congress-blue); line-height: 1.3;
+    }
+
+    /* Fade edges */
+    .carousel-wrapper::before, .carousel-wrapper::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 2; pointer-events: none;
+    }
+    .carousel-wrapper::before { left: 0; background: linear-gradient(to right, #f8f4ee, transparent); }
+    .carousel-wrapper::after  { right: 0; background: linear-gradient(to left, #f8f4ee, transparent); }
+
+    /* ABOUT */
+    .about-section { background: white; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 960px; margin: 0 auto; align-items: center; }
+    .about-img-box {
+      background: linear-gradient(135deg, var(--congress-blue), var(--congress-green));
+      border-radius: 12px; height: 280px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+    }
+    .about-text h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--congress-blue); margin-bottom: 14px; }
+    .about-text p { color: #555; line-height: 1.7; margin-bottom: 12px; }
+    @media(max-width:700px){ .about-grid { grid-template-columns: 1fr; } }
+
+    /* IDEOLOGY */
+    .ideology-section { background: #f5f0e8; }
+    .ideology-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+    .ideology-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); text-align: center; transition: transform 0.2s; }
     .ideology-card:hover { transform: translateY(-4px); }
-    .ideology-img { height: 200px; display: flex; align-items: center; justify-content: center; }
-    .ideology-body { padding: 24px; text-align: center; }
-    .ideology-body h3 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; margin-bottom: 8px; color: #111; }
-    .dark .ideology-body h3 { color: #f0f0f0; }
-    .ideology-body p { font-size: 15px; color: #777; line-height: 1.5; }
-    .dark .ideology-body p { color: #aaa; }
+    .ideology-img { padding: 24px 16px 12px; }
+    .ideology-img img { height: 100px; object-fit: contain; }
+    .ideology-body { padding: 12px 16px 20px; }
+    .ideology-body h3 { color: var(--congress-blue); font-size: 1rem; margin-bottom: 6px; }
+    .ideology-body p { color: #666; font-size: 0.82rem; line-height: 1.5; }
 
-    /* Inspirations */
-    .inspirations-scroll { display: flex; gap: 16px; overflow-x: auto; padding: 8px 4px 16px; margin-top: 40px; scrollbar-width: thin; }
-    .inspiration-card { flex-shrink: 0; width: 160px; background: #fff; border-radius: 20px; padding: 16px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.07); border: 1px solid #eee; }
-    .dark .inspiration-card { background: #1a1a1a; border-color: #333; }
-    .inspiration-card img { width: 110px; height: 110px; border-radius: 14px; object-fit: cover; margin-bottom: 12px; }
-    .inspiration-card h4 { font-weight: 700; font-size: 13px; color: var(--saffron); line-height: 1.3; }
-    .inspiration-card p { font-size: 11px; color: #888; margin-top: 4px; }
+    /* LEADERSHIP */
+    .leadership-section { background: white; }
+    .leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
+    .leader-card { text-align: center; background: #f8f8f8; border-radius: 12px; padding: 24px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); transition: transform 0.2s; }
+    .leader-card:hover { transform: translateY(-4px); }
+    .leader-avatar { width: 90px; height: 90px; border-radius: 50%; margin: 0 auto 14px; background: linear-gradient(135deg, var(--congress-blue), #2a5cbf); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; font-weight: 700; }
+    .leader-card h3 { font-size: 1rem; color: var(--congress-blue); margin-bottom: 4px; }
+    .leader-card p { font-size: 0.82rem; color: #888; }
 
-    /* News */
-    .news-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; max-width: 520px; margin-left: auto; margin-right: auto; }
-    .news-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.07); border: 1px solid #eee; transition: transform 0.2s; }
-    .dark .news-card { background: #1a1a1a; border-color: #333; }
-    .news-card:hover { transform: translateY(-3px); }
-    .news-card img { width: 100%; height: 180px; object-fit: cover; }
+    /* NEWS */
+    .news-section { background: #f5f0e8; }
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 960px; margin: 0 auto; }
+    .news-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+    .news-card .news-top { height: 8px; background: linear-gradient(to right, var(--congress-orange), var(--congress-green)); }
     .news-body { padding: 20px; }
-    .news-cat { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--saffron); margin-bottom: 8px; }
-    .news-body h4 { font-weight: 700; font-size: 17px; color: #111; margin-bottom: 8px; line-height: 1.4; }
-    .dark .news-body h4 { color: #f0f0f0; }
-    .news-body p { font-size: 14px; color: #777; line-height: 1.5; }
-    .dark .news-body p { color: #aaa; }
-    .news-meta { font-size: 12px; color: #aaa; margin-top: 12px; }
-    .news-more { color: var(--saffron); font-weight: 600; font-size: 13px; text-decoration: none; display: inline-block; margin-top: 10px; }
+    .news-date { font-size: 0.75rem; color: #999; margin-bottom: 8px; }
+    .news-body h3 { font-size: 1rem; color: var(--congress-blue); margin-bottom: 8px; line-height: 1.4; }
+    .news-body p { font-size: 0.85rem; color: #666; line-height: 1.5; }
 
-    /* Join */
-    .join-section { background: linear-gradient(135deg, var(--saffron), #e05500); color: #fff; text-align: center; padding: 72px 20px; }
-    .join-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 48px); font-weight: 900; margin-bottom: 12px; }
-    .join-section p { font-size: 17px; opacity: 0.9; margin-bottom: 36px; }
-    .join-form { display: flex; gap: 10px; max-width: 480px; margin: auto; flex-wrap: wrap; }
-    .join-form input { flex: 1; min-width: 180px; padding: 14px 20px; border-radius: 50px; border: none; font-size: 15px; font-family: inherit; outline: none; }
-    .join-form button { background: #111; color: #fff; padding: 14px 28px; border-radius: 50px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s; }
-    .join-form button:hover { background: #000; transform: scale(1.03); }
+    /* CONTACT */
+    .contact-section { background: var(--congress-blue); color: white; text-align: center; }
+    .contact-section .label span.our { color: white; }
+    .contact-section p { opacity: 0.8; margin-bottom: 6px; }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; max-width: 700px; margin: 30px auto 0; }
+    .contact-item { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 20px; }
+    .contact-item .icon { font-size: 2rem; margin-bottom: 10px; }
+    .contact-item h4 { margin-bottom: 6px; }
+    .contact-item p { font-size: 0.9rem; opacity: 0.75; }
 
-    /* Contact */
-    .contact-form { display: flex; flex-direction: column; gap: 14px; max-width: 520px; margin: 40px auto 0; }
-    .contact-form input, .contact-form textarea, .contact-form select { padding: 14px 18px; border: 1.5px solid #e0e0e0; border-radius: 14px; font-size: 15px; font-family: inherit; outline: none; transition: border 0.2s; background: #fff; }
-    .dark .contact-form input, .dark .contact-form textarea, .dark .contact-form select { background: #1a1a1a; border-color: #333; color: #f0f0f0; }
-    .contact-form input:focus, .contact-form textarea:focus { border-color: var(--saffron); }
-    .contact-form textarea { resize: vertical; min-height: 110px; }
-    .contact-form button { background: var(--navy); color: #fff; padding: 15px; border-radius: 14px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: all 0.2s; }
-    .contact-form button:hover { background: #002060; }
-    .contact-info { max-width: 520px; margin: 28px auto 0; display: flex; flex-direction: column; gap: 14px; }
-    .contact-item { display: flex; align-items: center; gap: 14px; background: #fff; border-radius: 14px; padding: 16px 20px; border: 1px solid #eee; }
-    .dark .contact-item { background: #1a1a1a; border-color: #333; }
-    .contact-item .icon { width: 40px; height: 40px; min-width: 40px; background: var(--saffron); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-    .contact-item p { font-size: 14px; color: #666; }
-    .dark .contact-item p { color: #aaa; }
-    .contact-item strong { display: block; font-size: 15px; color: #111; margin-bottom: 2px; }
-    .dark .contact-item strong { color: #f0f0f0; }
-
-    /* Footer */
-    footer { background: #0a1628; color: #aaa; padding: 56px 20px 24px; }
-    .footer-inner { max-width: 1100px; margin: auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
-    .footer-brand p { font-size: 14px; line-height: 1.7; margin: 14px 0; }
-    .footer-social { display: flex; gap: 10px; margin-top: 16px; }
-    .social-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 15px; color: #aaa; transition: all 0.2s; }
-    .social-btn:hover { background: var(--saffron); color: #fff; }
-    .footer-col h5 { color: #fff; font-size: 13px; font-weight: 700; margin-bottom: 16px; letter-spacing: 1px; text-transform: uppercase; }
-    .footer-col ul { list-style: none; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul a { color: #888; text-decoration: none; font-size: 14px; transition: color 0.2s; }
-    .footer-col ul a:hover { color: var(--saffron); }
-    .footer-bottom { max-width: 1100px; margin: auto; border-top: 1px solid #1e2d45; padding-top: 24px; display: flex; justify-content: space-between; font-size: 13px; flex-wrap: wrap; gap: 10px; }
-
-    /* Animations */
-    .fade-up { opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
-    .fade-up.visible { opacity: 1; transform: none; }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hamburger { display: block; }
-      .footer-inner { grid-template-columns: 1fr; gap: 28px; }
-      .inspirations-scroll { justify-content: flex-start; }
-    }
+    footer { background: #0d1f3c; color: rgba(255,255,255,0.6); text-align: center; padding: 20px; font-size: 0.85rem; }
+    footer strong { color: white; }
   </style>
 </head>
-<body id="bodyEl">
+<body>
 
-<!-- Tricolor top bar -->
-<div class="tricolor-bar" style="position:fixed;top:0;left:0;right:0;z-index:200;"></div>
-
-<!-- NAVBAR -->
-<nav style="margin-top:5px;">
-  <div class="nav-inner">
-    <a href="#" class="logo">
-      <img src="https://upload.wikimedia.org/wikipedia/en/6/6c/Indian_National_Congress_hand_logo.svg" alt="INC Logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Indian_National_Congress_hand_logo.svg/200px-Indian_National_Congress_hand_logo.svg.png'"/>
-      <div class="logo-text">
-        <h1>INC Pimpri Chinchwad</h1>
-        <span>भारतीय राष्ट्रीय काँग्रेस — पिंपरी चिंचवड</span>
-      </div>
-    </a>
-    <div class="nav-icons">
-      <button class="icon-btn" onclick="toggleDark()" id="darkBtn" title="Toggle dark mode"><i class="fa-regular fa-moon"></i></button>
-      <button class="icon-btn hamburger" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
-    </div>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#home" class="active">Home</a></li>
-      <li><a href="#ideology">Ideology</a></li>
-      <li><a href="#inspirations">Inspirations</a></li>
-      <li><a href="#news">News</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#join" class="nav-join">Join Us</a></li>
-    </ul>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/panja.jpg" alt="INC Logo">
+    <div class="site-title">Indian National Congress<br><strong>Pimpri Chinchwad</strong></div>
   </div>
-  <div class="mobile-menu" id="mobileMenu">
-    <a href="#home" onclick="toggleMenu()">Home</a>
-    <a href="#ideology" onclick="toggleMenu()">Ideology</a>
-    <a href="#inspirations" onclick="toggleMenu()">Inspirations</a>
-    <a href="#news" onclick="toggleMenu()">News</a>
-    <a href="#contact" onclick="toggleMenu()">Contact</a>
-    <a href="#join" onclick="toggleMenu()" style="color:var(--saffron);font-weight:700;">✋ Join Us</a>
+  <div class="nav-links">
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About Us</a>
+    <a href="#news">News & Events</a>
+    <a href="#contact">Contact Us</a>
   </div>
 </nav>
 
 <!-- HERO -->
-<section class="tricolor-bg hero" id="home">
-  <div class="fade-up">
-    <img src="https://upload.wikimedia.org/wikipedia/en/6/6c/Indian_National_Congress_hand_logo.svg"
-         alt="INC" style="width:90px;height:90px;object-fit:contain;margin:0 auto 24px;display:block;"
-         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Indian_National_Congress_hand_logo.svg/200px-Indian_National_Congress_hand_logo.svg.png'"/>
-    <div class="hero-badge">Official City Unit — PCMC</div>
-    <h1>Reclaiming <em>Pimpri Chinchwad's</em><br>Glory & Progress</h1>
-    <div class="hero-hindi">जनता की आवाज़, जनता की ताकत</div>
-    <p>The Indian National Congress Pimpri Chinchwad City Unit is committed to the development, welfare, and progress of every citizen of PCMC.</p>
-    <div class="hero-btns">
-      <a href="#join" class="btn-primary">✋ Join the Movement</a>
-      <a href="#ideology" class="btn-outline">Our Vision</a>
-    </div>
-    <div class="stats-row">
-      <div class="stat-box"><div class="num">68</div><div class="lbl">Prabhags in PCMC</div></div>
-      <div class="stat-box"><div class="num">25L+</div><div class="lbl">Citizens We Serve</div></div>
-      <div class="stat-box"><div class="num">1947</div><div class="lbl">Party Founded</div></div>
-      <div class="stat-box"><div class="num">100+</div><div class="lbl">Active Workers</div></div>
+<section class="hero" id="home">
+  <div class="hero-flag-bar"><span></span><span></span><span></span></div>
+  <h1>Indian National Congress</h1>
+  <div class="devanagari">पिंपरी चिंचवड शहर काँग्रेस</div>
+  <p>Serving the people of Pimpri Chinchwad with dedication, unity and progress</p>
+  <div class="hero-btns">
+    <a href="#about" class="btn-primary">Know More</a>
+    <a href="#contact" class="btn-outline">Join Us</a>
+  </div>
+</section>
+<div class="tricolor-bar"><span></span><span></span><span></span></div>
+
+<!-- OUR INSPIRATION -->
+<section class="inspiration-section" id="inspiration">
+  <div class="section-title">
+    <div class="label"><span class="our">OUR </span><span class="insp">INSPIRATION</span></div>
+  </div>
+  <div class="carousel-wrapper">
+    <div class="carousel-track">
+      <!-- SET 1 — using YOUR GitHub images -->
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/chhatrapati-shivaji-maharaj.jpg" alt="Chhatrapati Shivaji Maharaj">
+          <div class="card-overlay"><span>Chhatrapati Shivaji Maharaj</span></div>
+        </div>
+        <div class="card-name">Chhatrapati Shivaji Maharaj</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/chhatrapati-sambhaji-maharaj.jpg" alt="Chhatrapati Sambhaji Maharaj">
+          <div class="card-overlay"><span>Chhatrapati Sambhaji Maharaj</span></div>
+        </div>
+        <div class="card-name">Chhatrapati Sambhaji Maharaj</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/shahu-maharaj.jpg" alt="Rajarshi Shahu Maharaj">
+          <div class="card-overlay"><span>Rajarshi Shahu Maharaj of Kolhapur</span></div>
+        </div>
+        <div class="card-name">Rajarshi Shahu Maharaj</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/mahatma-phule.jpg" alt="Mahatma Jyotirao Phule">
+          <div class="card-overlay"><span>Mahatma Jyotirao Govindrao Phule</span></div>
+        </div>
+        <div class="card-name">Mahatma Jyotirao Phule</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/babasaheb-ambedkar.jpg" alt="Dr. B. R. Ambedkar">
+          <div class="card-overlay"><span>Bharat Ratna Dr. Bhimrao Ramji Ambedkar</span></div>
+        </div>
+        <div class="card-name">Babasaheb Dr. B. R. Ambedkar</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/mahatma-gandhi.jpg" alt="Mahatma Gandhi">
+          <div class="card-overlay"><span>Mahatma Mohandas Karamchand Gandhi</span></div>
+        </div>
+        <div class="card-name">Mahatma Gandhi</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/pandit-nehru.jpg" alt="Pandit Jawaharlal Nehru">
+          <div class="card-overlay"><span>Pandit Jawaharlal Nehru</span></div>
+        </div>
+        <div class="card-name">Pandit Jawaharlal Nehru</div>
+      </div>
+
+      <!-- SET 2 — duplicate for seamless loop -->
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/chhatrapati-shivaji-maharaj.jpg" alt="Chhatrapati Shivaji Maharaj">
+          <div class="card-overlay"><span>Chhatrapati Shivaji Maharaj</span></div>
+        </div>
+        <div class="card-name">Chhatrapati Shivaji Maharaj</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/chhatrapati-sambhaji-maharaj.jpg" alt="Chhatrapati Sambhaji Maharaj">
+          <div class="card-overlay"><span>Chhatrapati Sambhaji Maharaj</span></div>
+        </div>
+        <div class="card-name">Chhatrapati Sambhaji Maharaj</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/shahu-maharaj.jpg" alt="Rajarshi Shahu Maharaj">
+          <div class="card-overlay"><span>Rajarshi Shahu Maharaj of Kolhapur</span></div>
+        </div>
+        <div class="card-name">Rajarshi Shahu Maharaj</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/mahatma-phule.jpg" alt="Mahatma Jyotirao Phule">
+          <div class="card-overlay"><span>Mahatma Jyotirao Govindrao Phule</span></div>
+        </div>
+        <div class="card-name">Mahatma Jyotirao Phule</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/babasaheb-ambedkar.jpg" alt="Dr. B. R. Ambedkar">
+          <div class="card-overlay"><span>Bharat Ratna Dr. Bhimrao Ramji Ambedkar</span></div>
+        </div>
+        <div class="card-name">Babasaheb Dr. B. R. Ambedkar</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/mahatma-gandhi.jpg" alt="Mahatma Gandhi">
+          <div class="card-overlay"><span>Mahatma Mohandas Karamchand Gandhi</span></div>
+        </div>
+        <div class="card-name">Mahatma Gandhi</div>
+      </div>
+
+      <div class="inspiration-card">
+        <div class="card-img-wrap">
+          <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/pandit-nehru.jpg" alt="Pandit Jawaharlal Nehru">
+          <div class="card-overlay"><span>Pandit Jawaharlal Nehru</span></div>
+        </div>
+        <div class="card-name">Pandit Jawaharlal Nehru</div>
+      </div>
     </div>
   </div>
 </section>
+<div class="tricolor-bar"><span></span><span></span><span></span></div>
 
-<div class="tricolor-bar"></div>
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-title">
+    <div class="label"><span class="our">ABOUT </span><span class="insp">US</span></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-img-box">🏛️</div>
+    <div class="about-text">
+      <h3>INC Pimpri Chinchwad</h3>
+      <p>The Indian National Congress, Pimpri Chinchwad city unit, is dedicated to serving the people of PCMC with unwavering commitment to justice, equality and development.</p>
+      <p>With a legacy rooted in India's freedom struggle, we continue to fight for the rights of workers, farmers, youth and every citizen of our industrial city.</p>
+      <p>Our mission is to build a progressive Pimpri Chinchwad where every resident has access to quality education, healthcare, employment and dignified living.</p>
+    </div>
+  </div>
+</section>
 
 <!-- IDEOLOGY -->
-<section class="tricolor-bg" id="ideology">
-  <div class="section-inner" style="text-align:center;">
-    <div class="section-tag">Our Core</div>
-    <h2 class="section-title">Our Ideology</h2>
-    <p class="section-sub" style="margin:auto;">The five pillars that guide our path towards an inclusive and progressive Pimpri Chinchwad.</p>
-    <div class="ideology-list fade-up">
-
-      <div class="ideology-card">
-        <div class="ideology-img" style="background:#EFF6FF;">
-          <img src="democracy.jpg" alt="Democracy" style="height:160px;object-fit:contain;"/>
-        </div>
-        <div class="ideology-body">
-          <h3>Democracy</h3>
-          <p>Upholding the democratic values and institutions of our great nation.</p>
-        </div>
+<section class="ideology-section">
+  <div class="section-title">
+    <div class="label"><span class="our">OUR </span><span class="insp">IDEOLOGY</span></div>
+  </div>
+  <div class="ideology-grid">
+    <div class="ideology-card">
+      <div class="ideology-img" style="background:#EFF6FF;">
+        <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/democracy.jpg" alt="Democracy" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3388/3388892.png'">
       </div>
-
-      <div class="ideology-card">
-        <div class="ideology-img" style="background:#FFFBEB;">
-          <img src="Secularism.jpg" alt="Secularism" style="height:160px;object-fit:contain;"/>
-        </div>
-        <div class="ideology-body">
-          <h3>Secularism</h3>
-          <p>Respecting all religions and fostering communal harmony across PCMC.</p>
-        </div>
+      <div class="ideology-body"><h3>Democracy</h3><p>Upholding democratic values and institutions of our great nation.</p></div>
+    </div>
+    <div class="ideology-card">
+      <div class="ideology-img" style="background:#FFFBEB;">
+        <img src="https://cdn-icons-png.flaticon.com/512/4616/4616448.png" alt="Secularism">
       </div>
-
-      <div class="ideology-card">
-        <div class="ideology-img" style="background:#F0FFF4;">
-          <img src="inclusive-growth.jpg" alt="Inclusive Growth" style="height:160px;object-fit:contain;"/>
-        </div>
-        <div class="ideology-body">
-          <h3>Inclusive Growth</h3>
-          <p>Ensuring development reaches the last person — no citizen left behind.</p>
-        </div>
+      <div class="ideology-body"><h3>Secularism</h3><p>Respecting all religions and fostering communal harmony in PCMC.</p></div>
+    </div>
+    <div class="ideology-card">
+      <div class="ideology-img" style="background:#F0FFF4;">
+        <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/inclusive-growth.jpg" alt="Inclusive Growth" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3281/3281306.png'">
       </div>
-
-      <div class="ideology-card">
-        <div class="ideology-img" style="background:#FFF5F5;">
-          <img src="Social-Justice.jpg" alt="Social Justice" style="height:160px;object-fit:contain;"/>
-        </div>
-        <div class="ideology-body">
-          <h3>Social Justice</h3>
-          <p>Fighting for the rights of the marginalized and working class of PCMC.</p>
-        </div>
+      <div class="ideology-body"><h3>Inclusive Growth</h3><p>Ensuring development reaches the last person — no citizen left behind.</p></div>
+    </div>
+    <div class="ideology-card">
+      <div class="ideology-img" style="background:#FFF5F5;">
+        <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/Social-Justice.jpg" alt="Social Justice" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4340/4340060.png'">
       </div>
-
-      <div class="ideology-card">
-        <div class="ideology-img" style="background:#FFF9F0;">
-          <img src="nationalism.jpg" alt="Nationalism" style="width:100%;height:200px;object-fit:cover;"/>
-        </div>
-        <div class="ideology-body">
-          <h3>Nationalism</h3>
-          <p>Unwavering commitment to the unity, integrity, and progress of India.</p>
-        </div>
+      <div class="ideology-body"><h3>Social Justice</h3><p>Fighting for the rights of the marginalized and working class of PCMC.</p></div>
+    </div>
+    <div class="ideology-card">
+      <div class="ideology-img" style="background:#FFF9F0;">
+        <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/nationalism.jpg" alt="Nationalism" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/320px-Flag_of_India.svg.png'">
       </div>
-
+      <div class="ideology-body"><h3>Nationalism</h3><p>Unwavering commitment to the unity, integrity and progress of India.</p></div>
     </div>
   </div>
 </section>
-
-<div class="tricolor-bar"></div>
-
-<!-- INSPIRATIONS -->
-<section class="tricolor-bg" id="inspirations">
-  <div class="section-inner" style="text-align:center;">
-    <div class="section-tag">Our</div>
-    <h2 class="section-title">Inspirations</h2>
-    <p class="section-sub" style="margin:auto;">The great leaders who inspire our work for the people of Pimpri Chinchwad.</p>
-    <div class="inspirations-scroll fade-up" style="justify-content:center;flex-wrap:wrap;overflow:visible;">
-      <div class="inspiration-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Mahatma-Gandhi%2C_studio%2C_1931.jpg/220px-Mahatma-Gandhi%2C_studio%2C_1931.jpg" alt="Gandhi"/>
-        <h4>Mahatma Gandhi</h4>
-        <p>Father of the Nation</p>
-      </div>
-      <div class="inspiration-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Jawaharlal_Nehru_1948.jpg/220px-Jawaharlal_Nehru_1948.jpg" alt="Nehru"/>
-        <h4>Pt. Jawaharlal Nehru</h4>
-        <p>First Prime Minister</p>
-      </div>
-      <div class="inspiration-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Bhimrao_Ramji_Ambedkar.jpg/220px-Bhimrao_Ramji_Ambedkar.jpg" alt="Ambedkar"/>
-        <h4>Dr. B.R. Ambedkar</h4>
-        <p>Architect of Constitution</p>
-      </div>
-      <div class="inspiration-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Shivaji_BritishMuseum.jpg/220px-Shivaji_BritishMuseum.jpg" alt="Shivaji"/>
-        <h4>Chhatrapati Shivaji Maharaj</h4>
-        <p>Architect of Swarajya</p>
-      </div>
-      <div class="inspiration-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Indira_Gandhi%2C_1977.jpg/220px-Indira_Gandhi%2C_1977.jpg" alt="Indira Gandhi"/>
-        <h4>Indira Gandhi</h4>
-        <p>Iron Lady of India</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="tricolor-bar"></div>
 
 <!-- NEWS -->
-<section class="tricolor-bg" id="news">
-  <div class="section-inner" style="text-align:center;">
-    <div class="section-tag">Latest</div>
-    <h2 class="section-title">News & Events</h2>
-    <p class="section-sub" style="margin:auto;">Stay updated with party activities and campaigns across Pimpri Chinchwad.</p>
-    <div class="news-grid fade-up">
-
-      <div class="news-card">
-        <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&q=80" alt="Rally"/>
-        <div class="news-body">
-          <div class="news-cat">Campaign</div>
-          <h4>Mega Jan Sampark Rally at Thergaon Grounds</h4>
-          <p>Thousands gathered to demand better roads and water supply across PCMC wards.</p>
-          <div class="news-meta">📅 28 May 2026 &nbsp;·&nbsp; 📍 Thergaon</div>
-          <a href="#" class="news-more">Read More →</a>
-        </div>
+<section class="news-section" id="news">
+  <div class="section-title">
+    <div class="label"><span class="our">NEWS & </span><span class="insp">EVENTS</span></div>
+  </div>
+  <div class="news-grid">
+    <div class="news-card">
+      <div class="news-top"></div>
+      <div class="news-body">
+        <div class="news-date">June 2026</div>
+        <h3>Rally for Workers' Rights in PCMC</h3>
+        <p>Congress leaders organized a massive rally demanding better wages and working conditions for industrial workers of Pimpri Chinchwad.</p>
       </div>
-
-      <div class="news-card">
-        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80" alt="Health"/>
-        <div class="news-body">
-          <div class="news-cat">Health</div>
-          <h4>Free Health Camp Organized in Nigdi Pradhikaran</h4>
-          <p>Over 800 residents benefited from free diabetes and BP screening.</p>
-          <div class="news-meta">📅 22 May 2026 &nbsp;·&nbsp; 📍 Nigdi</div>
-          <a href="#" class="news-more">Read More →</a>
-        </div>
+    </div>
+    <div class="news-card">
+      <div class="news-top"></div>
+      <div class="news-body">
+        <div class="news-date">May 2026</div>
+        <h3>Free Medical Camp in Chinchwad</h3>
+        <p>INC Pimpri Chinchwad organized a free health checkup camp serving over 500 residents from underprivileged areas.</p>
       </div>
-
-      <div class="news-card">
-        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" alt="Education"/>
-        <div class="news-body">
-          <div class="news-cat">Education</div>
-          <h4>Scholarship Drive for PCMC Students Launched</h4>
-          <p>Congress announces scholarship assistance for students from weaker sections.</p>
-          <div class="news-meta">📅 15 May 2026 &nbsp;·&nbsp; 📍 PCMC HQ</div>
-          <a href="#" class="news-more">Read More →</a>
-        </div>
+    </div>
+    <div class="news-card">
+      <div class="news-top"></div>
+      <div class="news-body">
+        <div class="news-date">April 2026</div>
+        <h3>Youth Congress Membership Drive</h3>
+        <p>Thousands of youth enrolled in the Youth Congress, pledging to work for a better, progressive Pimpri Chinchwad.</p>
       </div>
-
     </div>
   </div>
 </section>
-
-<div class="tricolor-bar"></div>
-
-<!-- JOIN -->
-<section class="join-section" id="join">
-  <h2>Join the INC Movement</h2>
-  <p>Be part of the change. Join thousands building a better Pimpri Chinchwad.</p>
-  <div class="join-form">
-    <input type="text" placeholder="Your Full Name"/>
-    <input type="tel" placeholder="Mobile Number"/>
-    <button onclick="alert('Thank you! Our team will contact you. Congress Zindabad! 🇮🇳')">Join Now ✋</button>
-  </div>
-</section>
-
-<div class="tricolor-bar"></div>
 
 <!-- CONTACT -->
-<section class="tricolor-bg" id="contact">
-  <div class="section-inner" style="text-align:center;">
-    <div class="section-tag">Get in Touch</div>
-    <h2 class="section-title">Contact Us</h2>
-    <p class="section-sub" style="margin:auto;">Reach out to INC Pimpri Chinchwad — your voice matters to us.</p>
-    <div class="contact-info">
-      <div class="contact-item">
-        <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
-        <div><strong>Address</strong><p>Congress Bhavan, Near PCMC Main Office, Pimpri, Pune – 411018</p></div>
-      </div>
-      <div class="contact-item">
-        <div class="icon"><i class="fa-solid fa-phone"></i></div>
-        <div><strong>Phone</strong><p>+91 98601 77177</p></div>
-      </div>
-      <div class="contact-item">
-        <div class="icon"><i class="fa-solid fa-envelope"></i></div>
-        <div><strong>Email</strong><p>President@pimprichinchwadcongress.org</p></div>
-      </div>
-
+<section class="contact-section" id="contact">
+  <div class="section-title">
+    <div class="label"><span class="our" style="color:white;">CONTACT </span><span class="insp">US</span></div>
+  </div>
+  <p>Reach out to INC Pimpri Chinchwad</p>
+  <div class="contact-grid">
+    <div class="contact-item">
+      <div class="icon">📞</div>
+      <h4>Phone</h4>
+      <p>+91 98601 77177</p>
     </div>
-    <form class="contact-form fade-up" onsubmit="event.preventDefault();alert('Message sent! We will get back to you soon. 🇮🇳')">
-      <input type="text" placeholder="Your Full Name" required/>
-      <input type="tel" placeholder="Mobile Number" required/>
-      <input type="email" placeholder="Email Address (optional)"/>
-      <input type="text" placeholder="Your Ward / Area in PCMC"/>
-      <textarea placeholder="Your message or grievance..."></textarea>
-      <button type="submit">Send Message →</button>
-    </form>
+    <div class="contact-item">
+      <div class="icon">✉️</div>
+      <h4>Email</h4>
+      <p>President@pimprichinchwadcongress.org</p>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<div class="tricolor-bar"></div>
 <footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-        <img src="https://upload.wikimedia.org/wikipedia/en/6/6c/Indian_National_Congress_hand_logo.svg" alt="INC" style="width:40px;height:40px;object-fit:contain;filter:brightness(0) invert(1);"/>
-        <div style="color:#fff;font-weight:700;font-size:15px;">INC Pimpri Chinchwad</div>
-      </div>
-      <p>Indian National Congress — Pimpri Chinchwad City Committee. Working for the people of PCMC.</p>
-      <div class="footer-social">
-        <a href="#" class="social-btn"><i class="fa-brands fa-facebook"></i></a>
-        <a href="#" class="social-btn"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" class="social-btn"><i class="fa-brands fa-youtube"></i></a>
-        <a href="#" class="social-btn"><i class="fa-brands fa-whatsapp"></i></a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h5>Quick Links</h5>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#ideology">Our Ideology</a></li>
-        <li><a href="#inspirations">Inspirations</a></li>
-        <li><a href="#news">News & Events</a></li>
-        <li><a href="#join">Join Congress</a></li>
-        <li><a href="#contact">Contact Us</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h5>Resources</h5>
-      <ul>
-        <li><a href="https://incmaharashtra.org" target="_blank">INC Maharashtra</a></li>
-        <li><a href="https://inc.in" target="_blank">AICC National</a></li>
-        <li><a href="#">PCMC Website</a></li>
-        <li><a href="#">Grievance Portal</a></li>
-        <li><a href="#">Youth Congress</a></li>
-        <li><a href="#">Mahila Congress</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 INC Pimpri Chinchwad. All Rights Reserved.</span>
-    <span style="color:var(--saffron);">🇮🇳 Congress Zindabad · पिंपरी चिंचवड काँग्रेस</span>
-  </div>
+  <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/panja.jpg" alt="INC Logo" style="height:50px;margin-bottom:10px;border-radius:50%;">
+  <p>&copy; 2026 <strong>Indian National Congress – Pimpri Chinchwad</strong>. All Rights Reserved.</p>
+  <p style="margin-top:4px;">जय हिंद | जय महाराष्ट्र</p>
 </footer>
 
-<script>
-  function toggleDark() {
-    document.documentElement.classList.toggle('dark');
-    const btn = document.getElementById('darkBtn');
-    btn.innerHTML = document.documentElement.classList.contains('dark')
-      ? '<i class="fa-regular fa-sun"></i>'
-      : '<i class="fa-regular fa-moon"></i>';
-  }
-  function toggleMenu() {
-    document.getElementById('mobileMenu').classList.toggle('open');
-  }
-  // Scroll animations
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-  // Active nav
-  window.addEventListener('scroll', () => {
-    document.querySelectorAll('section[id]').forEach(s => {
-      if (window.scrollY >= s.offsetTop - 80) {
-        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-        const active = document.querySelector(`.nav-links a[href="#${s.id}"]`);
-        if (active) active.classList.add('active');
-      }
-    });
-  });
-</script>
 </body>
 </html>
