@@ -553,29 +553,22 @@
       btn.textContent = "Submitting... ⏳";
       btn.disabled = true;
 
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('address', address);
-      formData.append('email', email);
-      formData.append('contact', contact);
+      const params = new URLSearchParams();
+      params.append('name', name);
+      params.append('address', address);
+      params.append('email', email);
+      params.append('contact', contact);
 
       fetch(SCRIPT_URL, {
         method: "POST",
-        body: formData
+        body: params,
+        headers: {"Content-Type": "application/x-www-form-urlencoded"}
       })
-      .then(r => r.json())
-      .then(data => {
-        if (data.status === "success") {
-          document.getElementById('form-wrap').style.display = 'none';
-          document.getElementById('form-success').style.display = 'block';
-        } else {
-          showError("❌ " + data.message);
-          btn.textContent = "🙏 SUBMIT APPLICATION";
-          btn.disabled = false;
-        }
+      .then(() => {
+        document.getElementById('form-wrap').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
       })
       .catch(() => {
-        // No-cors fallback — assume success if no response
         document.getElementById('form-wrap').style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
       });
