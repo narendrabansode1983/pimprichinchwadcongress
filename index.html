@@ -169,10 +169,11 @@
     .about-section { background: white; }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 960px; margin: 0 auto; align-items: center; }
     .about-img-box {
-      background: linear-gradient(135deg, var(--congress-blue), var(--congress-green));
       border-radius: 12px; height: 280px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 5rem;
+      overflow: hidden;
+    }
+    .about-img-box img {
+      width: 100%; height: 100%; object-fit: cover;
     }
     .about-text h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--congress-blue); margin-bottom: 14px; }
     .about-text p { color: #555; line-height: 1.7; margin-bottom: 12px; }
@@ -420,7 +421,9 @@
     <div class="label"><span class="our">ABOUT </span><span class="insp">US</span></div>
   </div>
   <div class="about-grid">
-    <div class="about-img-box">🏛️</div>
+    <div class="about-img-box">
+      <img src="https://raw.githubusercontent.com/narendrabansode1983/pimprichinchwadcongress/main/Pimpri-Chinchwad-Municipal-Corporation.jpg" alt="Pimpri Chinchwad Municipal Corporation">
+    </div>
     <div class="about-text">
       <h3>INC Pimpri Chinchwad</h3>
       <p>The Indian National Congress, Pimpri Chinchwad city unit, is dedicated to serving the people of PCMC with unwavering commitment to justice, equality and development.</p>
